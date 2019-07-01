@@ -1,0 +1,95 @@
+<html>
+<head>
+<title>Add / remove textbox example</title>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<style type="text/css">
+    div{
+        padding:8px;
+    }
+</style>
+
+</head>
+
+<body>
+
+<h1>Add / remove textbox example</h1>
+
+<div id='TextBoxesGroup'>
+    <div id="TextBoxDiv1">
+      <div class="form-group">
+        <label for="">JD #1 :</label>
+        <textarea class="form-control" id="textbox1"></textarea>
+      </div>
+    </div>
+</div>
+
+<input type='button' value='Add JD Box' id='addJD'>
+<input type='button' value='Remove JD Box' id='removeJD'>
+<input type='button' value='Submit' id='submitJDValue'>
+
+
+<script type="text/javascript">
+  $(document).ready(function() {
+
+      var counter = 2;
+
+      // Add TextBox Field
+      $("#addJD").click(function() {
+
+          if (counter > 10) {
+              alert("Only 10 textboxes allow");
+              return false;
+          }
+
+          var newTextBoxDiv = $(document.createElement('div'))
+              .attr("id", 'TextBoxDiv' + counter);
+
+          newTextBoxDiv.after().html('<div class="form-group"><label>JD #' + counter + ' : </label>' +
+              '<textarea name="textbox' + counter +
+              '" id="textbox' + counter + '" value="" ></textarea></div>');
+
+          newTextBoxDiv.appendTo("#TextBoxesGroup");
+
+          counter++;
+      });
+
+      // Remove TextBox Field
+      $("#removeJD").click(function() {
+          if (counter == 1) {
+              alert("No more textbox to remove");
+              return false;
+          }
+
+          counter--;
+
+          $("#TextBoxDiv" + counter).remove();
+
+      });
+
+      $("#submitJDValue").click(function() {
+
+          var msg = '';
+          for (i = 1; i < counter; i++) {
+              msg += "\n JD #" + i + " : " + $('#textbox' + i).val();
+          }
+          alert(msg);
+
+          // for (i = 1; i < counter; i++) {
+          //     var testBoxValue = $('#textbox' + i).val();
+
+          //     $.ajax({
+          //       url:'assets/ajax/activities.php',
+          //       type:'POST',
+          //       data:{testBoxValue, activities:'activities' },
+          //       success:function(data){
+          //         console.log(data);
+          //       }
+          //     });
+          // }
+      });
+  });
+</script>
+</body>
+</html>
